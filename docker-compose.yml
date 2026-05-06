@@ -1,0 +1,25 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: edtech-microcredenciales-backend
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      JWT_SECRET: "ZWR0ZWNoLW1pY3JvY3JlZGVuY2lhbGVzLXNlY3JldC1jb3Jwb3JhdGl2by1tdXktbGFyZ28tNjQtYnl0ZXMtcHJvZA=="
+      JWT_EXPIRATION_MS: 86400000
+      CORS_ALLOWED_ORIGINS: "http://localhost:4200,http://127.0.0.1:4200"
+      SPRING_DATASOURCE_URL: "jdbc:h2:file:/app/data/microcredenciales;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+    volumes:
+      - microcredenciales-data:/app/data
+    networks:
+      - edtech-net
+
+networks:
+  edtech-net:
+    driver: bridge
+
+volumes:
+  microcredenciales-data:
